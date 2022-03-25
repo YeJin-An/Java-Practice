@@ -1,0 +1,387 @@
+자바의 특징
+
+1. 배우기 쉬운 객체지향 언어
+-> 프로그래밍언어 + 객체지향 개념 C++,  java,  python,  js
+2. 자동 메모리 관리
+3. 멀티 쓰레드를 지원
+4. 풍부한 라이브러리로 쉽게 개발가능
+5. 운영체제에 독립적
+-> 자바 가상 머신(JWM)
+
+Java ApI란?
+Java로 프로그램을 만드는데 필요한 주요 가능을 미리 만들어서 제공.
+
+Javac.exe
+-> 자바 컴파일러.
+-> 사람이 작성한 문장을 기계어로 번역한다.
+-> 소스파일(*.java)을 클래스 파일(*.class)로 변환
+
+Java.exe
+-> 자바 인터프린터
+-> 자바 프로그램(클래스 파일)을 실행
+
+클래스
+-> 자바 프로그램의 단위
+-> 자바 프로그램은 클래스들로 구성
+class 클래스 이름 { /*모든 문장은 클래스의 { }안에 있어야 한다. */ }
+
+main메서드
+-> 자바 프로그램의 시작점
+-> 이 메서드 없이 실행 불가
+public static void main(String[] args){
+/* 실행할 문장을 넣는다. (첫 문장부터 순서대로 실행됨) */}
+
+// 메서드(함수)_관련된 것을 뭉쳐놓은 것이다.
+
+
+이클립스에서 자바 프로그램을 작성하는 순서
+1. 프로젝트를 생성한다.
+2. 클래스를 생성한다.
+3. 소스파일의 작성 후 저장 (자동컴파일됨)
+4. 실행
+
+Build 관련 메누 설명
+
+Build란?
+-> 소스 파일로부터 프로그램을 만들어 내는 전 과정
+
+Build All
+-> workspace의 모든 프로젝트를 빌드
+
+Build Project
+-> 현재 프로젝트를 빌드 (변경된 소스 파일만 새로 컴파일)
+
+Clean
+-> 이전 빌드의 정보를 모두 삭제 (모든 소스 파일을 새로 컴파일)
+
+Build Automatically
+-> 소스 파일을 변경 후, 저장할 때마다 자동 컴파일
+
+
+변수(variable)란?
+-> 하나의 값을 저장할 수 있는 메모리 공간[RAM] 
+->1 바이트의 저장공간에 연속적은 번호를 붙인 것이 메모리주소
+
+변수의 선언
+1. 변수의 선언 이유
+- 값(data)을 저장할 공간을 마련하기 위해서
+2. 변수의 선언 방법
+- 변수 타입  변수이름; 
+EX> int age; // 정수(int)타입의 변수 age를 선언
+
+변수에 값 저장하기
+1. 변수에 값 저장하기
+- int age;    age = 25;  // "=" (대입 연산자)
+2. 변수의 초기화
+- 변수에 처음으로 값을 저장하는 것
+  int x = 0;  int y = 5; // 변수 { }를 선언 후, { }으로 초기화
+
+변수의 종류
+- 1) 클래스 변수, 2) 인스턴스변수, 3) 지역변수
+[주의] 지역 변수는 읽기 전에 꼭! 초기화해야 함.
+
+변수의 값 읽어오기
+1. 변수의 값이 필요한 곳에 변수의 이름을 적는다.
+- int year = 0, age = 14;    
+  year = age + 2000;
+
+
+
+변수의 타입
+1. 변수의 타입은 저장할 값의 타입에 의해 결정된다.
+- 실수타입은 실수를 담자!!
+2. 저장할 값의 타입이 일치하는 타입으로 변수를 선언
+- char은 {문자형 - 문자} , double은 {실수형 -실수}
+
+값의 타입
+값(data)  - 문자 (char)
+            - 숫자  - 정수 ( byte, short, {int}, long )
+                      - 실수 ( float, double )
+
+            - 논리 = boolean ( true, false )
+
+
+변수, 상수, 리터럴
+-> 변수(variable) = 하나의 값을 저장하기 위한 {공간}
+    - 변경이 가능
+    - int score = 100;  score = 200; 가능!!
+-> 상수(constant) = 한 번만 값을 저장 가능 한 {변수}
+    - 변경이 불가능
+    - final int MAX = 100;  MAX = 200; 에러발생!!
+-> 리터럴(literal) = 그 자체로 값을 의미하는 것
+   - (기존의 상수) 상수랑 완전히 같은 개념이다!! 
+   - 변수의 타입에 상관없이 int age = 100; 
+     100을 의미한다!!
+
+
+리터럴의 접두사와 접미사
+  종류                   리터럴                        접미사
+논리형 -> false, true                              ->  없음
+정수형 -> 123, 0b0101, 077, 0xFF, 100{L}   ->  L
+실수형 -> 3.14, 3.0e8, 1.4{f}, 0x1.0p-1        ->  f, d
+문자형 -> 'A', '1', '\n'                           -> 없음
+문자열 -> "ABC", "123", "A", "true"           ->  없음
+
+// 접미사 -> 대소문자 구별안함.
+EX> boolean power = true;
+      char ch = 'A' -> 한개만 가능!!
+      String str = "ABC"; -> 문자열은 한개이상 가능!!
+      byte b = 127; -> 접미사가 없으니 {정수형}!!
+// L, d은 생략가능!! 
+   허나 f는 double로 인지하여 써야함!!
+   접미사가 없는 실수는 무조건 double이다!!
+   e는 실수이다!!
+
+// 접두사 0 , 0x
+Ex> int i = 100;        // 10진수
+      int oct = 0100;   // 8진수
+      int hex = 0x100  // 16진수
+
+
+변수와 리터럴의 타입 불일치
+1. 범위가 '변수(그릇) > 리터럴(물건)' 인 경우, OK
+Ex> int i = 'A'            // int > char
+      long l = '123'      // long > int
+      double d = 3.14f  // double > float
+
+2. 범위가 '변수(그릇) < 리터럴(물건)' 인 경우, 에러
+Ex> int i =30_0000_0000;  // int의 범위(20억)벗어남
+      long l = 3.14f;          // long < float
+      float f = 3.14;           // float < double
+
+3. byte, short 변수에 int리터럴 저장가능
+   단, 변수의 타입의 점위 이내이어야 함.
+Ex> byte b =100;   // Ok, byte의 범위(-128~127)에 속함
+      byte b =128;   // 에러. byte의 범위를 벗어남.
+
+
+문자와 문자열
+1. 문자는 빈문자를 허용하지 않는다.
+2. 문자열은 빈 문자열를 허용한다. 
+   [ String s =""; ]
+// 허나 {출력} 은 안된다??
+
+// 문자열 + any type => 문자열
+// any type + 문자열 => 문자열
+
+
+두 변수의 값 교환하기
+int temp = one;
+one = two;
+two = temp;
+
+
+기본형과 참조형
+값 - 문자 => char
+    - 숫자 - 정수 => byte, short, int, long
+             - 실수 -> float, double
+
+    - 논리 => boolean [ true, false ]
+
+기본형 (Primitive type)
+-> [ boolean, char, byte, short, int, long, float, double ]
+참조형 (Reference type)
+-> 기본형을 제외한 나머지 [ String, System, Date 등등 ]
+-> 메모리 주소를 저장( 4byte OR 8 byte )
+// 4byte -> 40억 [*]
+   8byte -> 40억 * 40억 = 160경byte = 1600만TB
+
+Date today;
+today = new Date(); // today에 객체의 주소를 저장
+
+
+
+기본형(Primitive type) - 종류와 크기
+1. 논리형 - true, false 조건식과 논리적 계산에 사용된다
+2. 문자형 - 변수 당 하나의 문자만을 저장할 수 있음.
+             - 여려문자는 참조형은 String타입을 사용해야 함.
+3. 정수형 - 정수 값을 저장하는 것 , int과 long이 있다.
+             - byte는 이전 데이터를 다루는데 사용
+             - short는 c언어와 호환을 위해 추가.
+4. 실수형 - 실수 값을 저장하는데 사용 [float ,double]
+
+종류,크기      1            2           4              8
+
+논리형      boolean
+문자형                     char
+정수형      byte         short        int          long
+실수형                                   float       double
+
+// 유니코드(2byte)
+// 부동소수점(floating point) 
+// 부동 -> 떠나니다.
+// double는 float의 정밀도가 2배!!
+// 디폴트 설정 -> 기본 설정!! 
+                        (int, double)
+
+
+
+기본형(Primitive type) - 표현범위(1/3)
+byte b;
+// 1 byte = 8bit
+// 1 bit -> 2진수 한자리 저장 가능(0, 1)
+
+-> n비트로 표현할 수 있는 값의 개수
+-> n비트로 표현할 수 있는 부호없는 정수의 범위
+-> n비트로 표현할 수 있는 부호있는 정수의 범위
+   -2^(n-1) ~ 2^(n-1) -1
+
+
+기본형(Primitive type) - 표현범위(2/3)
+// 부호비트(Sign bit)
+byte  =>  7bit
+short => 15bit
+char  => 16bit
+
+
+기본형(Primitive type) - 표현범위(3/3)
+자료형    저장가능한 값의 범위(양수)     정밀도    크기[bit]
+float                                                7자리       32
+double                                            15자리      64
+
+
+float
+// 부호(S) + 지수(E(8)) + 가수(M(23))
+// 오차없는 자리수 = 정밀도
+// 가수의 자릿 수로 {정밀도} 판단
+
+double
+// 부호(S) + 지수(E(11)) + 가수(M(52))
+
+
+
+-형식화된 출력 = printf()
+== println()의 단점  - 출력형식 지정불가
+1. 실수의 자리수 조절불가
+-> 소수점 n자리만 출력하려면?
+2. 10진수로만 출력된다.
+-> 8진수, 16진수로 출력하려면?
+
+== printf()로 출력형식 지정가능
+-> 줄바꿈을 하지 않음. 개행문자(\n) 사용해야함.
+Ex> System.out.printf("%.2f", 10.0/3);
+      System.out.printf("%d", 10x1A); 
+      System.out.printf("%X", 0x1A);
+-> 지시해주는 지시자는 "%" 
+
+
+-printf()의 지시자(1/3)
+정수 = %b, %d, %o, %x,%X   
+실수 = %f, %e,%E               
+문자 = %c, %s                   
+
+-printf()의 지시자(2/3)
+1. 정수를 10진수, 8진수, 16진수로 출력
+System.out.printf("%d", 15);  //10진수 -> Decimal
+System.out.printf("%o", 15);  //08진수 -> Octal
+System.out.printf("%x", 15);  //16진수 -> Hexa
+
+2. 8진수와 16진수에 접두사 붙이기
+System.out.printf("%#d", 15);  // 017
+System.out.printf("%#x", 15);  // 0xf
+System.out.printf("%#X", 15);  // 0xF
+
+3. 실수 출력을 위한 지시자 %f - 지수형식(%e), 
+                                        - 간략한 형식(%g)
+System.out.printf("%f",  123.456789f);  // 소수점아래 6자리
+System.out.printf("%e", 123.456789f);  // 지수형식
+// 정밀도는 믿을 수 있을 만한 것 
+    따라서 정밀도 높으면 실뢰성을 올라감..
+
+-printf()의 지시자(3/3)
+System.out.printf("[%5d]\n", 10);   // [     10]
+System.out.printf("[%-5d]\n", 10);  // [10     ]
+System.out.printf("[%05d]\n", 10);  // [00010]
+
+
+
+화면에서 입력받기 - Scammer
+-Scanner란?
+=> 화면으로부터 데이터를 입력받는 기능을 제공하는 클래스
+
+
+-Scanner를 사용하려면...?
+1. import문 추가
+=> import java.util.*;
+
+2. Scanner 객체의 생성
+=> Scanner scanner = new Scanner(System.in);
+
+3. Scanner객체를 사용
+int    num = scanner.nextInt();    //정수
+float num = scanner.nextFloat();  //실수
+
+String input = scanner.nextLine();
+int num = Integer.parseInt(input);
+// 문자열을 숫자로 변환!!
+
+
+정수형의 오버플로우
+1. 10진수  0 ~ 10^n -1
+2. 2진수   0 ~ 2^n-1
+16비트로 표현할 수 있는 정수의 개수
+-> short타입의 표현범위 -> 음수,양수
+-> char타입의 포현범위 -> 양수
+
+
+타입간의 변환방법
+1. 문자와 숫자간의 변환
+-> 문자열을"0" 더하기 빼기 하면 변환가능!
+-> 더하면 문자 , 빼면 숫자!!!
+2. 문자열로의 변환
+-> 숫자 + 빈문자열 = 문자열로 변환가능!
+3. 문자열을 숫자로 변환
+-> Integer.parseInt("number")+ 1 로 변환가능!
+-> Double.parseDouble("3.14)+1
+
+-> "3".charAt(0) => 문자열을 문자로 변환하는 방법
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
