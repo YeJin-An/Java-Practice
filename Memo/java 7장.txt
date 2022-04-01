@@ -424,6 +424,25 @@ A. 아니요. 허용되지 않습니다.
 // 조상이 5개 < 자손7개 허용  ,  조상이7개 < 자손5개 허용 안됨!!
 
 
+{ 참조변수의 형변환(1) }
+참조변수의 형변환 
+-> 사용할 수 있는 멤버의 갯수를 조절하는 것
+-> 조상 자손 관계의 참조변수는 서로 형변환 가능
+   // 형제관계는 없떠요!!
+
+class Car {  }
+class ForeEngine extends Car{ }
+class Ambulance extends Car{ }
+
+Car c = (Car)f ; 
+FireEngine f2 = (FireEngine)c ;
+Ambulance a = (Ambulance)f ;
+
+
+
+
+
+
 
 
 
