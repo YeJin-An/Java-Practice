@@ -90,11 +90,139 @@ interface MyInterface{
 
 
 
-ㅇㅇㅇㅇㅇㅇㅇ
+
+ch7-42 내부 클래스(inner class)
+-> 클래스 안의 클래스
+
+내부 클래스의 장점
+-> 내부 클래스에서 외부 클래스의 멤버들을 쉽게 접근할 수 있다.
+-> 코드의 복잡성을 줄일 수 있다. (캡슐화)
+
+
+class AAA{
+    int i = 100;
+    BBB b = new BBB();
+
+    class BBB{
+        void method(){
+            System,out.println(i);
+        }
+    }
+}
+
+
+내부 클래스의 종류와 특징
+-> 내부 클래스의 종류와 유효범위(scope)는 변수와 동일
+
+
+1. 인스턴스 내부 클래스   -> class InstanceInner{}
+2. 스태틱 내부 클래스      -> static class StaticInner{}
+3. 지역 내부 클래스         -> void mymethod(){ int lv = 0; }
+4. 익명 클래그
+
+
+{ 내부 클래스의 제어자와 접근성 }
+-> 내부 클래스의 제어자는 변수에 사용 가능한 제어자와 동일
+
+class Outer{
+    private int iv = 0;
+    protected static int cv = 0;
+    
+    void myMethod(){ int lv = 0; }
+}
+
+class Outer{
+    private class InstanceInner{}
+    protected static class StaticInner{}
+    void myMthod(){ class LocalInner{} }
+}
+
+Ex>
+class Ex7_12{
+    class InstanceInner{}        // 인스턴스 내부 클래스
+    static class StaticInner{}   // static 내부 클래스 
+    void myMethod(){}         // 지역 내부 클래스
+} // static클래스만 static멤버만 정의 할 수 있다.
+
+
+예제 7-12
+
+class InstanceInner{
+    int iv = 100;
+    final static int CONST = 100;
+}
+
+static class StaticInner{
+    int iv = 200;
+    static int cv = 200;
+}
+
+void myMethd(){
+    class LocalInner{
+        int iv = 300;
+        final static int CONST = 300;
+    }
+}
+
+public static void main(String args[]){
+    System.out.println(InstanceInner.CONST);
+    System.out.println(StaticInner.cv);
+    System.out.println(LocalInner.CONST);  //이것은 사용 불가능!
+    --> 내부클래스는 메서드 안에서만 사용이 가능하기 때문이다.
+    // 에러. 지녁 내부 클래스는 메서드 내에서만 실행 가능!!!
+}
+
+
+// 다시 정리
+인스턴스 멤버가 static멤버로 사용가능.
+static멤버는 인스턴스 멤버로 사용 불가능.
+--> static 클래스에서 인스턴스 멤버로 가리킬 수 없음.
+
+
+EX>
+내부클래스는 외부 클래스의 private멤버도 접근가능하다!!
+// 상수는 따로 관리하기 때문에,
+    메소드가 종료되어도 상수는 사용할 수 있다.
 
 
 
+ch7-49 내부 클래스의 제어자와 접근성
+// 외부 클래스의 인스턴스를 먼저 생성
+// 인스턴스를 생성 가능
+// static 내부 클래스의 인스턴스는 외부 클래스를 먼저
+    생성하지 않아도 된다.
 
+class Outer3{
+    int value = 10;
+
+    class Inner{
+        int value = 20;
+ 
+        void method1(){
+            int value = 30;
+            System.out.println(value);                 //외부클래스의 iv
+            System.out.println(this.value);            //내부클래스의 iv
+            System.out.println(Outer3.this.value);   // lv
+        }
+    }
+}
+
+
+
+{ 익명클래스 }
+익명 클래스(anonymous class)
+-> 이름이 없는 일회용 클래스.  정의와 생성을 동시에
+
+new 조상클래스이름(){ //멤버 선언 }
+new 구현인터페이스이름(){ //멤버 선언 }
+
+// 익명클래스는 일회성이다.!! 
+    -> 정의와 생성을 한번에 한다.
+b.addActionListener(new ActionListener());
+익명클래스 바꾸기
+b.addActionListener(new ActionListener()
+                              {이 안에 객체 및 함수 생성});
+{이 안에 함수를 넣기!!}
 
 
 
