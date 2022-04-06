@@ -1,0 +1,239 @@
+ch8-1 프로그램 오류
+
+자바 컴파일러
+1. 구문체크  ,  2. 번역  ,  3. 최적화
+
+
+1. 컴파일(compile-time error) 에러  : 컴파일 할 때 발생하는 에러
+2. 런타임(runtime error) 에러         : 실행 할 때 발생하는 에러
+3. 논리적(logical error) 에러          : 작성 의도와 다르게 동작
+
+1. 아예 실행이 되지 않습니다.
+2. 실행을 하는데, 어?? 갑자기 종료가 되네
+3. 어?? 분명 이값이 나와야 하는데, 안나오네..
+
+2. java of runtime error
+-> 에러(error) 
+     -- 프로그램 코드에 의해서 소습될 수 없는 심각한 오류
+-> 예외(exception) 
+    -- 프로그램 코드에 의해서 수습될 수 있는 다소 미약한 오류
+
+예외처리의 정의와 목적
+정의 -> 프로그램 실행 시 발생할 수 있는 예외의 발생에
+           대비한 코드를 작성하는 것
+목적 -> 프로그램의 비정상 종료를 막고, 
+           정상적인 실행상태를 유지하는 것
+
+Exception클래스들
+: 사용자의 실수와 같은 외적인 요인에 의해 발생하는 예외
+RuntimeException클래스들
+: 프로그래머의 실수로 발생하는 예외
+
+
+예외처리하기. try-catch문
+try{ 
+}catch(Exception e1){
+}catch(Exception e2){
+}
+// try블럭이나 catch블러 내에 포함된 문장이 
+   하나뿐이어도 괄호{ }를 생략할 수 없다.
+
+
+try-catch문에서의 프름
+1. try블럭 내에서 예외가 발생할 경우.
+-> try문이 수행되지 않는다.
+2. try블럭 내에서 예외가 발생하지 않은 경우,
+-> try-catch문을 모두 수행을 합니다.
+
+
+예외의 발생과 catch블럭
+-> 예외가 발생하면, 이를 처리할 catch블럭을 찾아 내려감.
+-> 일치하는 catch블럭이 없으면, 예외는 처리 안됨
+-> Exception이 선언된 catch블럭은 모든 예외처리 
+   (마지막 catch블럭) 이유: Exception는 조당 입섹션이기 때문,
+
+
+
+printStackTrace()와 getMessage()
+
+printStackTrace()
+-> 예외발생 당시의 호출스택(Call Stack)에 있었던
+     메서드의 정보와 예외 메시지를 화면에 출력한다.
+getMessage()
+-> 발생한 예외클래스의 인스턴스에 저장된 메시지를 얻을 수 있다.
+// 예외 객체를 만들어 메서드를 호출하여 
+   화면에 보이도록 하는 것이다.
+
+
+
+멀티 catch블럭
+-> 내용이 같은 catch블럭을 하나로 합친 것(JDK1.7부터)
+try{ }catch(ExceptionA | ExceptionB e){ })
+// 만일 멀티catch블럭은 부모 자식관계에서는 불가능한다.
+  --> 공통멤버만 사용할 수 있음. -- 코드중복을 위한 것임!!
+
+
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+예외 발생시키기
+1. 연산자 new를 이용해서 발생시키려는 
+   예외 클래스의 객체를 만든 다음
+   -- Exception e = new Exception("고의로 발생시켰음");
+2. 키워드throw를 이용해서 예외를 발생시킨다.
+   -- throw e;
+]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+chacked예외, unchecked예외
+-> checked예외 
+: 컴파일러가 예외 처리 여부를 처크(예외 처리 필수)
+-> unchecked예외 
+: 컴파일러가 예외 처리 여부를 체크 안함(예외 처리 선택)
+
+
+
+// 오류의 종류
+1. 컴파일에러
+2. 런타임에러 - error : 심각
+                  - Excaption  -- Exception과 자손 : 체크드예외(필수)
+                                  -- RuntimeException과 자손
+                                                             : 언체크드 예외(선택) 
+-->(런-E-R) 0/0 , 형변환, null, 배열범위 벗어남
+
+3.논리적에러
+
+public static void main(String[] args){
+    try{  // Exception과 그 자손은 반드시 예외처리를 해줘야 한다.
+    throw new Exception();
+    }  catch(Exception e) {}
+
+    // RuntimeException과 그자손은 
+       예외처리를 해주지 않아도 컴파일 된다.
+    throw new RuntimeException();
+}
+
+
+
+메서드에 예외 선언하기
+-> 예외를 처리하는 방법 : (1) try-catch문
+                                  (2) 예외 선언하기__예외 떠넘기기 (알리기)
+                                  (3) 은폐
+
+-> 메서드가 호출시 발생가능한 예외를 호출하는 쪽에 알리는 것
+void method() throws Exception1, Exception2, ... ExceptionN{ }
+void method() throws Exception{ }
+--> Exception은 모든 예외의 최소 조상--모든 종류예외가 발생가능.
+// 예외를 발생시키는 키워드throw와 예외를 메서드에 선언
+    할 때 쓰이는 throws를 잘 구별하자.!!
+
+
+오버라이딩
+1. 선언부 일치
+2. 접근제어자 좁게 (X)
+3. 조상보다 많은 예외 선언(X)
+
+static void startInstall() throws SpaceException, MemoryException{ }
+// startInstall이 실행되면 2가지의 예외처리가 될 수 있다는 의미.
+
+
+메서드에 예외 선언하기
+-> 메서드가 호출시 발생가능한 예외를 호출하는 쪽에 알리는 것.
+// 만일 wait라는 메서드를 사용할때, 발생할 수 있는 예외를 적는 것
+   그런데 예외가 여러개 인데, 한개만 알려주는 것인가?
+--> class InterruptedException이기 때문에 
+      필수처리 예외(체크드예외)만 선언 한 것이기 때문이다.!!!
+      --> 선택 이외에는 적지 않습니다!! __ 그것이 정석이다.
+
+
+public static void main(String[] args) thows Exception{
+    method1();}
+
+static void method1() throws Exception{
+    method2();}
+
+static void method2() throws Exception{throw new Exception();}
+// 이러다가 main메서드까지 떠넘기다가 
+    프로그램 종료가 된다. --> 그렇게 비 정상적으로 종료가 된다.
+
+
+finally블럭
+-> 예외 발생여부와 관계없이 수행되어야 하는 코드를 넣는다.
+// 예외의 발생여부에 관계없이 
+   항상 수행되어야 하는 문장들을 넣는다
+// finally블럭은 try-catch문의 맨 마지막에 위치해야한다.
+--> try블럭 안에 return문이 있어서 try블럭을 벗어나갈 때도 
+     finally블럭이 실행된다.
+
+
+
+사용자 정의 예외 만들기
+-> 우리가 직접 예외 클래스를 정의할 수 있다.
+-> 조상은 exception과 RuntimeException중에서 선택..
+    -- 사용자가 발생시키는 예외
+    -- 프로그래머의 실수로 발생시키는 예외
+// 선택처리가 되는 RuntimeExceptiond로 조상을 선택하자????
+
+
+-- class MyException extends Exception{}
+    // 필수 예외로 (try-catch)가 필요하다는 이야기 이다.
+
+
+
+예외 되던지기(exception re-throwing)
+-> 예외를 처리한 후에 다시 예외를 발생시키는 것
+-> 호출한 메서드와 호출된 메서드 양쪽 모두에서 예외처리하는 것
+(1) 예외를 처리한 다음
+(2) 다시 예외를 발생시키는 것
+// 안그래도 처리를 하려고 하는데, 폭탄을 던져 처리를 하게 한다.
+   --> 이것을 예외 되던지기 라고 합니다.!!
+
+
+[ 아빠와 딸이 분담처리 ]__예외 되던지기 하고 합니다.
+1. 딸이 처리
+2. 아빠에게 예외를 토스
+3. 양쪽에서 처리( 딸이 조금처리, 나머지는 아빠가 처리)
+예제 8-12에서 확인할 수 있습니다.
+
+
+// 예외처리 다시정리
+try-catch
+1. 직접 처리
+2. 떠넘기기(알린다.)
+3. 직접 처리 -> 떠넘기기 -> 직접 처리로
+   분담으로 예외를 되던지기
+// 로 총 3가지고 예외 처리를 할 수 있습니다.
+
+
+ch8-18 연결될 예외(chained exception)
+-> 한 예외가 다른 예외를 발생시킬 수 있다.
+-> 예외A가 예외B를 발생시키는, A는B의 원인 예외(cause exception)
+
+Thowable initCause(Throwable cause)
+-> 지정한 예외를 원인 예외로 등록
+Thorwable getCause()
+-> 원인 예외를 반환
+
+// 연결된 예외란? 
+    -> InstallException의 원인 예외를 SpaceException으로 지정.
+   -> 새로운 예외를 생성하여 예외A를 떠넘긴 다음에
+        지정한 예외를 원인 예외로 등록하는 것을 말한다.
+
+
+
+원인 예외로 연결된 예외로 사용하는 이유
+1. 여러 예외를 하나로 묶어서 다루기 위해서
+2. checked예외를 unchecked예외로 변경하려 할 때
+   --> 필수처리를 선택처리를 바꿀려고 했을 때 , 사용한다.
+-- Exception을 RunException으로 변경하려고 하지만,
+   어려울 때, 연결된 예외처리를 하면 된다. [위장하는 것]
+throw new RuntimeException(new MemoryException("이렇게 등록"))
+
+
+
+
+
+
+
+
+
+
+
+
