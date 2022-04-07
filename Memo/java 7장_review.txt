@@ -1,0 +1,148 @@
+// 클래스의 관계 (1)상속 (2)포함
+[상속관계 '~은~이다.(ls-a)]
+[포함관계 '~은~을 가지고 있다.(has-a)']
+
+ch7-1 상속(lnheritance)
+-> 기존의 클래스에 새로운 클래스로 작성(코드의 재사용)
+-> 두 클래스를 부모와 자식으로 관계를 맺어주는 것
+-> 자손은 조상의 모든 멤버를 상속받는다(생성자, 초기화블럭 제외)
+-> 자손의 멤버 개수는 보상보다 적을 수 없다(같거나 많다.)
+-> 자손의 변경은 조상에 영향을 미치지 않는다.
+
+class Point{ int x;  int y; }
+class Point3D extends Point{ int z; }
+-> 상속은 객체와 참조변수를 그릴때, 차이점이 없습니다.
+
+
+ch7-3 포함관계
+class Circle {
+    Point c = new Pont();
+    int r;
+} --> Circle이 Point를 포함한다.
+
+class Car{
+    Engine e = new Engine();
+    Door[] d = new Door[4];
+} --> 작은 단위 클래스 작성후, 조합하여 클래스 작성
+
+포함(composite)이란 
+1. 클래스의 멤버로 참조변수를 선언하는 것
+2. 작은 단위의 클래스를 만들고, 이 들을 조합해서 클래스를 만든다.
+
+
+ch7-5 단일 상속(Single lnheritance)
+-> java는 단일 상속만을 허용한다.(c++은 다중상속 허용)
+다중상속 방법
+-> 비중이 높은 클래스 하나만 상속관계로, 
+                           나머지는 포함관계로 한다
+
+ch7-6 Object클래스 - 모든 클래스의 조상
+-> 부모가 없는 클래스는 Object클래스를 상속받게 된다.
+    -- class Tv extends Object{}//컴파일 자동추가
+-> Object클래스의 메서드 사용가능
+
+ch7-7 오버라이딩(overriding)__덮어쓰다.
+-> 상속받은 조상의 메서드를 자신에 맞게 변경하는 것
+     -- 메서드 호출은 오버라이딩 된 것을 출력해준다!!
+-> 선언부는 변경불가! BUT 구현부는 변경가능!
+
+오버라이딩의 조건
+1. 선언부가 조상 클래스의 메서드와 일치해야 한다.
+2. 접근 제어자를 조상 클래스의 메서드보다 좁은 범위로 변경안 됨.
+3. 예외는 조상 클래스의 메서드보다 많이 선언할수 없다.
+   --> 조상클래스를 선언한 예외보다 많으면 안된다.
+
+ch7-9 오버로딩 VS 오버라이딩
+1. 오버로딩 -> 기존에 없는 새로운 메서드 정의 (new)
+2. 오버라이딩 -> 상속받은 메서드의 내용을 변경 (change, modify)
+
+
+[오버라이딩]  void parentMethod(){}
+[오버로딩]     void parentMethod(int i){}
+
+[메소드 정의] void childMethod(){}
+[오버로딩]     void childMethod(int i){}
+[중복정의]     void childMethod(){}
+
+
+접근제어자
+1. public  2. protected, (default), private
+
+객체 초기화
+1. MyPoint p; 
+   circle(){ p= new MyPoint(); }
+2. System.out.println(p.toString()); or System.out.println(p);
+   --> 오버라이딩 편
+
+
+
+ch7-10 참조변수 super 
+-> 참조변수 this와 유사(객체 자신을 가리키는 참조변수)
+-> 인스턴스 메서드(생성자)내에만 존자
+-> 조상의 멤버와 자신의 멤버와 구별하여 사용
+    // 자기 멤버에는 this , 조상 멤버에는 super를 붙인다.
+BUT 자손클래스내에 지역변수가 없다면, 멤버구분없이 조상꺼 출력
+
+
+ch7-11 super()-조상과 생성자
+1. 조상의 생성자를 호출할 때 사용
+2. 조상의 멤버는 조상의 생성자를 호출해서 초기
+    Point3D(int x, int y, in z){
+        super(x, y); //조상은 조상님꺼는 조상이 하떼요!
+        this.z = z;  //자손은 자손껏만 할거라구욧!!  }
+{추가조건}
+3. 생성자의 첫 줄에 반드시 생성자를 호출해야 한다.
+    그렇지 않으면 생성자 첫 줄에 super()를 삽입할거야!!
+    class Point extends Object{ int x; int y; }
+           Point(){ this(0,0); }
+           Point(int x, int y){ super();//Object  this.x=x;  this.y=y; }
+// super()를 지키지 않으면 error가 나오기 때문입니다.
+   1. super();  2. super(x,y)를 작성해보자!!
+
+
+
+ch7-12 패키지(package)
+-> 서로 관련된 클래스의 묶음
+-> 클래스는 클래스 파일(*.class),
+    패키지는 폴더.  하위 패키지는 하위 폴더
+-> 클래스의 실제이름(full name)은 패키지를 포함
+
+
+ch7-13 패키지의 선언__Package com.codechobo.book;
+-> 패키지는 소스파일의 첫 번째 문장으로 단 한번 선언
+-> 같은 소스 파일의 클래스들은 모두 같은 패키지에 속하게 된다.
+-> 패키지 선언이 없으면, 이름없는(unnamed)패키지에 속하게 된다.
+
+
+ch7-14 클래스 패스(classpath)
+-> 클래스 파일(*.class)의 위치를 알려주는 경로(path)
+-> 환경변수 classpath로 관리하며, 경로간의 구분자는 ';'를 사용
+    classpath(환경변수)에 패키지의 루트를 등록해줘야 함.
+
+
+C:\>java Ex7_1_1
+p.x: 3
+p.y: 5
+p.z: 0
+x: 3, y: 5, z: 0
+x: 3, y: 5, z: 0, i: 0
+
+C:\>classpath
+'classpath'은(는) 내부 또는 외부 명령, 실행할 수 있는 프 로그램, 또는
+배치 파일이 아닙니다.
+
+C:\>set classpath
+classpath=C:\Users\user\eclipse-workspace\ch07\bin
+
+
+
+
+
+
+
+
+
+
+
+
+
