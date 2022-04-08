@@ -1,0 +1,20 @@
+추상(abstract)
+-> 추상클래스를 사용하기위해
+    상속받은 모든 메소드는 반드시 구현을 해줘야 한다.
+
+abstract class Player{
+    abstract void play(String songName);
+    abstract void pause();
+    abstract void stop();
+}
+
+public class Main extends Player{
+    public static void main(String[] args){ }
+    
+    @Override
+    void play(String songName){}
+    @Override
+    void pause(){}
+    @Override
+    void stop(){}
+}
