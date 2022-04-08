@@ -1,0 +1,72 @@
+ch9-4 hashCode()
+-> 객체의 해시코드(hash code)를 반환하는 메서드
+-> Object클래스의 hashcode()는 객체의 주소를 int로 변환해서 반환
+// 객체의 지문
+-> equals()를 오버라이딩하면, hashCode()도 오버라이딩해야 한다.
+-> System.identityHashCode(Object obj)는 Object클래스의
+     hashCode()와 동일
+
+public class Object{
+    public native int haskCode();
+}
+
+
+ch9-5~6 toString(), toString()의 오버라이딩
+-> toString(): 객체를 문자열(String)으로 변환하기 위한 메서드
+
+public String toString{
+    return "kind: " + kind + + ", number: " + number ;
+}
+
+public int hashCode(){
+    reutrn Objects.hash(kind, number);
+}
+
+
+ch9-1 Object클래스
+-> 모든 클래스의 최고조상.
+-> 오직 11개의 메서드만을 가지고 있다.
+-> notify(), wait() 등은 쓰레드와 관련된 메서드이다.
+
+Object클래스의 메서드
+1. protected Object clone()
+2. public boolean equals(Object obj)
+3. protected void finalize()
+4. public Class getClass()
+5. public int hashCode()
+6. public String toString()
+7. public void notify()
+8. public void notifyAll()
+
+쓰레드 관련
+9. public void wait()
+10. public void wait(long timeout)
+11. public void wait(long timeout, int nanos)
+
+
+
+ch9-2 equals(Object obj)
+-> 객체 자신과 주어진 객체를 비교한다.
+-> 같으면 true 다르면 false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
