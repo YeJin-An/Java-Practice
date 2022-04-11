@@ -1,0 +1,368 @@
+ch11 컬렉션 프레임웍(collections framework)
+-> 컬렉션(collection)
+    : 여러 객체(데이터)를 모다 놓은 것을 의미
+-> 프레임웍(framework)
+    : 표준화, 정형화된 체계적인 프로그래밍 방식
+
+-> 컬렉션 프레임웍(collections framework)
+   : 컬렉션(다수의 객체)을 다루기 위한 표준화된 프로그래밍 방식
+   : 컬렉션을 쉽고 편리하게 다룰 수 있는 다양한 클래스를 제공.
+     (저장, 삭제, 검색, 정렬)
+
+-> 컬렉션 클래스(colletion class)
+   : 다수의 데이터를 저장할 수 있는 클래스
+    (예, Vector, ArrayList, HashSet)
+
+
+
+ch11-2 컬렉션 프레임웍의 핵심 인터페이스
+1. List  ==  ArrayList, LinkedList, Stack, Vector
+-> 순서가 있는 집합, 중복을 허용
+2. Set   == HashSet, TreeSet
+-> 순서가 없는 집합, 중복 미허용
+3. Map == HashMap, TreeMap, Hashtable, Properties
+-> 키와 벨류
+-> 순서가 없고, 키중복 안되고, 값중복 허용
+
+// Collection (List, Set) , Key,Value(Map)
+
+
+
+ch11-3 Collection인터페이스의 메서드
+1. List   -> 순서0, 중복0
+2. Set   -> 순서X, 중복X
+3. Map -> 순서X, 중복(키X, 값0)
+// Collection(List, Set)
+
+
+
+ch11-4 List인터페이스 - 순서-0, 중복0
+List <- (Vector<-(Stack), ArrayList, LickedList)
+
+ch11-5 Set인터페이스 - 순서-X, 중복X
+Set <- (HashSet, SortedSet<-(TreeSet))
+
+ch11-6 Map인터페이스 - 순서X, 중복(키X, 값0)
+Map <- (Hashtable, HashMap  <-(LinkedHashMap), 
+                          SortedMap<-(TreeMap))
+
+
+ch11-7 ArrayList
+-> ArraySet와 달리 Vector는 자체적으로 동기화처리가 되어있다.
+-> 데이터의 저장공간으로 배열을 사용한다. (배열기반)
+== list1.remove(1); -> index 값의 1를 삭제하는 것이다.
+== retainAll          -> 겹치지는 부분만 제외하고 삭제하는 것
+
+
+
+ch11-10 ArrayList에 저장된 객체의 삭제과정
+-> ArrayList에 저장된 세 번째 데이터(data[2])를 삭제하는 과정
+-> list.remove(2); 를 호출.
+1. 삭제할 데이터 아래의 데이터를 한 칸씩 위로 복사해서 
+   삭제할 데이터를 덮어쓴다.
+2. 데이터가 모두 한 칸씩 이동했으므로 마지막 데이터는
+    null로 변경한다.
+3. 데이터가 삭제되어 데이터의 개수가 줄었으므로 
+   size의 값을 감소시킨다.
+
+1) get(i)으로 list2에서 하나씩 꺼낸다.
+2) contains()로 꺼낸 객체가 list1에 있는지 확인
+3) remove(i)로 해당 객체를 list2에서 삭제
+
+1 삭제할 데이터를 다른 데이터로 덮어쓰기 위해 복사한다.
+2 데이터가 이동하면 마지막 데이터는 null로 변경한다.
+3 데이터가 삭제되어 데이터의 개수가 줄었으므로 size의 값을 감소.
+
+
+
+ch11-11 Java API 소스보기 
+-> src.zip를 풀어서 보면 되요!!
+-> ArrayList 소스를 보고 싶으면, 이것을 보면 됩니다!!!
+-> 이클립스는 Open Declaration을 클릭하여 보면된다.
+
+
+ch11-12 LinkedList --배열의 장단점
+
+장점 : 배열은 구조가 간단하고 
+        데이터를 읽는 데 걸리는 시간(접근시간, access time)이 짧다.
+
+단점 : 크기를 변경할 수 없다.
+-> 크기를 변경해야 하는 경우 새로운 배열을 생성 후
+    데이터를 복사해야함.
+--> 크기 변경을 피하기 위해 충분히 큰 배열을 생성하면, 
+     메모리가 낭비됨
+-> 비순차적인 데이터의 추가, 삭제에 시간이 많이 걸린다. (실행 중)
+--> 데이터를 추가하거나 삭제를 위해 다른 데이터로 옮겨야함
+--> 순차적인 데이터 추가와 삭제는 빠르다.
+//// 1. 더 큰배열 생성   2. 복사   3. 참조변경
+//  단점 1. 크기변경X  2. 추가, 삭제시 시오랜 시간이 소요
+
+
+ch11-12 LinkedList --배열의 단점을 보안
+1. 크기변경X  2. 추가, 삭제, 시간Up
+-> 배열과 달리 링크드 리스트는 
+    불연속적으로 존재하는 데이터를 연결(link)
+
+데이터의 삭제 : 단 한 번의 참조변경만으로 가능.
+참조변수를 가리키는 객체의 주소값을 각각 개별요소로 들어가 있음.
+
+데이터의 추가 : 한 번의Node객체생성과 두 번의 참조변경만으로 가능.
+참조변수를 가리키는 객체의 주소값을 변경하여 데이터를 추가 한다.
+
+Linked List -- 연결리스트, 데이터 접근성이 나쁨
+--> 2번째 요소만 알지 3,4번째 요소들만 알 고 있습니다.
+class Node{
+    Node next;
+    object obj;
+}
+Linked List의 단점을 보안하기 위해
+--> doubly Linked List -- 이중 연결리스트, 접근성 향상
+2번째 요소에서 1번째 요소로 접근가능(접근성 향성__연결)
+앞 뒤로만 가능합니다!!
+class Node{
+    Node next;
+    Node previous;
+    Object obj;
+}
+doubly Linked List의 단점을 보안하기 위해
+doubly circular Linked List -- 이중 원형 연결리스트
+마지막 값이 null 인데, null값을 주소값으로 체워주는 것이다.
+맨 앞 , 맨 뒤 가능!!
+
+     배열기반     연결기반
+3.3 ArrayList VS LinkedList -- 성능 비교
+1.    순차적으로 데이터를 추가/삭제 --  ArrayList가 빠름
+2. 비순차적으로 데이터를 추가/삭제 -- LinkedList가 빠름
+3.                접근시간(access time) --  ArrayList가 빠름
+[ access time ]
+-> 인덱스가 n인 데이터의 주소 = 배열의 주소 + n * 데이터 타입의 크기
+// 배열기반 = 연속  ,  연결기반 = 불연속
+
+
+
+ch11-15 스택과 큐(Stack & Queue)
+스택(Stack) : LIFO(Last in First Out)구조. 
+                : 저장(push) , 추출(pop)
+                 마지막에 저장된 것을 제일 먼저 꺼내게 된다.
+// 배열로 만드는 것이 유리하다.
+ 큐(Queue) : FIFO(First in First Out)구조
+               : 저장(ofter) , 추출(poll)
+               : 제일 먼저 저장한 것을 제일 먼저 꺼내게 된다. 
+// 링크드리스트로 만드는 것이 유리하다.
+
+
+ch11-16 스택과 큐(Stack & Queue)의 메서드
+// peek 맨 위가 머가 있는지 보는 것이다.
+Stack st = new Stack();
+-> boolean empty()
+-> Object peek()
+-> Object pop()
+-> Object push(Object item)
+-> int seatch(Object o)
+
+큐
+-> boolean add(Object o)
+-> Object remove()
+// 객체를 꺼내 반환 , 비어있으면 NoSuchElementException발생
+-> Object element()
+-> boolean offer(Object o)
+-> Object poll()
+-> Object peek()
+
+
+ch11-18 인터페이스를 구현한 클래스 찾기
+// java.util
+1. Queue를 직접 구현.
+2. Queue를 구현한 클래스를 사용.
+-> Interface Queue<E>
+// Queue g = new LinkedList( );
+   -> All Known Implementing Classes:
+
+객체생성
+Stack st  = new Stack( );
+st.push("0");
+Queue q = new LinkedList( );
+q.offer("0");
+
+
+
+ch11-19 스택과 큐(Stack & Queue)의 활용
+스택의 활용 예
+-> 수식계산, 수식괄호검사, 워드프로세서의 undo/redo
+    웹브라우저의 뒤로/앞으로
+   큐의 활용 예
+-> 최근사용문서, 인쇄작업 대기목록, 버퍼(buffer)
+
+ex 3> 
+public static void main(String[] args){}
+String expression = "...";
+System.out.println("expression: "+expression);
+// 링크드 리스트로 형변환이 가능합니다!!
+
+
+
+ch11-22 Iterator, ListIterator, Enumeration
+-> 컬렉션에 저장된 데이터를 접근하는데 사용되는 인터페이스
+-> Enumeration은 Iterator의 구버전
+-> ListIterator는 Iterator의 접근성을 향상시킨 것(단방향 -> 양방향)
+// 접근 == 읽어오기
+
+booleam hasNext()  //확인
+Object next()          //읽기
+
+1. Iterator
+-> 컬렉션에 저장된 요소들을 읽어오는 방법을 표준화한 것
+-> 컬렉션에 iterator()를 호출해서 
+     Iterator를 구현한 객체를 얻어서 사용.
+-- boolean hasNext()
+-- Object next()
+
+List list = new ArrayList();
+Iterator it = list.iterator();        // Iterator 객체를 반환
+while(it.hasNext()){                // 읽어올 요소가 있는지 확인
+    System.out.println(it.next()); //요소를 읽어 출력
+                                          이미 읽는 것은 false가 된다.
+--> iterator는 1회용이라 다쓰고나면 다시 얻어와야 한다.
+}
+2. ListIterator   == 양방향
+3. Enumeration == odd
+
+Collection
+1. List -> Array, LinkedList
+2. Set -> TreeSet
+3. Map -> HashMap
+// 객체 생성시 Collection c = new ...( );
+   Iterator it = c.iterator();
+   while(it.hasNext()){Object obj = it.next();}
+
+
+ch11-24 Map과 Iterator
+-> Map에는 iterator( )가 없어,
+    KeySet(), entrySet(), values()를 호출해야 합니다!
+
+// Iterator it = map.entrySet().iterator();
+// Set eSet = map.entrySet();
+// Iterator it = eSet.iterator();
+---> Iterator it = map.entrySet().iterator();
+
+public interface collection{
+    public Iterator iterator();
+}
+
+
+ch11-25 Arrays(1/4)
+-> 배열을 다루기 편리한 
+    메서드(static, Objects, Collections)제공
+1. 배열의 출력 - toString()
+2. 배열의 복사 - copyOf(), copyOfRange()
+int[] arr2 = Arrays.copyOf(arr, 3);
+int[] arr2 = Arrays.copyOfRange(arr, 2, 4);
+                                              -> from, to
+3. 배열 채우기 - fill(), setAll()
+Arrays.fill(arr,9);
+Arrays.setAll(arr, (i)->(int)(Math.random()*5)+1);
+
+4. 배열의 정렬과 검색 - sort(), binarySearch()
+Arrays.sort(arr); // 배열을 정렬
+Arrays.binarySearch(arr,2); // 2란 값이 어디에 있는지 찾기
+
+// 알아두면 좋아요! -- 순차 검색과 이진 검색
+순차 검색(탐색) -> 하나하나씩 찾는 검색방법
+이진 검색        -> 1~100 사이의 값찾는 게임!!
+
+
+ch11-27 Arrays(3/4) - 배열을 다루기 편리한 메서드(static)제공
+5. 다차원 배열의 출력 - deepToString()
+System.out.println(Arrays.toString(arr));
+System.out.println(Arrays.to.deepTostring(arr2D));
+
+6. 다차원 배열의 비교 - deepEquals()
+System.out.println(Arrays.equals(str2D, str2D2);
+System.out.println(Arrays.deepEquals(str2D, str2D2);
+
+
+ch11-28 Arrays(4/4) - 배열을 다루기 편리한 메서드(static)제공
+7. 배열을 List로 변환 - asList(Object...a)
+-> List는 읽기전용이므로 추가를 하려고 한다면,
+     UnsupportedOperationException 예외발생입니다.!
+
+값을 추가해주기 위해서
+List list = new ArrayList(Arrays.asList(1,2,3,4,5));
+새로운 ArrayList를 만들어주면 변경이 가능하다.
+
+8. 람다와 스트림(14장)관련 - parallelXXX(), spliterator(), stream()
+
+
+
+ch11-30 Comparator와 Comparable
+-> 객체 정렬에 필요한 메서드(정렬기준 제공)를 
+    정의한 인터페이스
+Comparable : 기본 정렬기준을 구현하는데 사용.
+Comparator : 기본 정렬기분 외에 다른 기준으로 
+                  정렬하고자할 때 사용
+
+// compare()와 compareTo()는 
+   두 객체의 비교결과를 반환하도록 작성
+arrays.sort(strArr, String.CASE_INSENSITIVE_ORDER);
+// 역순___c1.compareTo(c2) * -1;
+
+
+ch11-32 Interger와 Comparable
+public final class Integer 
+extends Number 
+implements Comparable{
+}
+
+
+public int compareTo(Integer anotherInteger){
+    int thisVal = this.value;
+    int anotherVal = anotherInteger.value;
+
+    return (this<anotherVal?-1:(thisVal==anotherVal?0:1));
+--> 대부분 성능이 크기 때문에 사용이됩니다.
+}
+
+
+// Comparable 기본정렬 기준제공(default)
+   __정렬기준이 없을 때 사용.
+
+--> 두 대상을 비교하고, 자리바꿈 반복은 '불변'
+--> 정렬 기준제공은 '가변'
+
+
+ch11-34 HashSet - 순서X, 중복X
+// List 순서0, 중복0
+
+Set <- (HashSet, SortedSet<-(TreeSet))
+
+HashSet
+-> Set인터페이스를 구현한 대표적인 컬렉션 클래스
+-> 순서를 유지하려면, LinkedHashSet클래스를 사용하면 된다.
+
+TreeSet
+-> 범위 검색과 정렬에 유리한 컬렉션 클래스
+-> HashSet보다 데이터 추가, 삭제에 시간이 더 걸림
+// Set == 순서X, 중복X
+
+Iterator it = set.iterator( );
+while(it.hasNext()){                 // 읽어올 요소가 있는 지 확인
+    System.out.println(it.next());  // 요소 하나 꺼내오기
+}
+
+
+Set set = new HashSet();
+
+List list = new LinkedList(set);
+Collections.sort(list);
+System.out.println(list);
+
+
+
+
+
+
+
+
+
+
+
